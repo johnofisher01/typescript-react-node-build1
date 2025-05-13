@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     res.status(200).json({ success: true, mostViewed, mostShared });
   } catch (err: any) {
-    console.error("Error fetching highlights:", err.message);
-    res.status(500).json({ success: false, message: "Internal Server Error" });
+    console.error('🔥 Error fetching highlights:', err);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 }

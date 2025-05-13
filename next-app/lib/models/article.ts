@@ -4,16 +4,43 @@ import sequelize from '../db';
 class Article extends Model {}
 
 Article.init({
-  title: DataTypes.STRING,
-  author: DataTypes.STRING,
-  content: DataTypes.TEXT,
-  views: DataTypes.INTEGER,
-  shares: DataTypes.INTEGER,
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+  },
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  summary: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  content: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  author: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  views: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: 0,
+  },
+  shares: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: 0,
+  },
 }, {
   sequelize,
   modelName: 'Article',
-  tableName: 'Articles', // use your actual table name
-  timestamps: true,
+  tableName: 'articles',
+  timestamps: false, 
 });
 
 export default Article;
