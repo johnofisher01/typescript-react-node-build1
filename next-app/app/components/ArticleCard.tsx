@@ -1,6 +1,21 @@
-import React from "react";
+'use client';
+import React from 'react';
 
-const ArticleCard = ({ article, onSummarize }) => {
+type Article = {
+  id: number;
+  title: string;
+  author: string;
+  content: string;
+  views: number;
+  shares: number;
+};
+
+type Props = {
+  article: Article;
+  onSummarize: (id: number) => void;
+};
+
+const ArticleCard: React.FC<Props> = ({ article, onSummarize }) => {
   return (
     <div className="bg-white border border-gray-300 shadow-2xl rounded-lg p-6 flex flex-col justify-between hover:shadow-3xl hover:scale-105 transition-all duration-300">
       <div>

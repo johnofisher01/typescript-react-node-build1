@@ -1,7 +1,22 @@
-import React from "react";
-import ArticleCard from "./ArticleCard";
+'use client';
+import React from 'react';
+import ArticleCard from './ArticleCard';
 
-const ArticleList = ({ articles, onSummarize }) => {
+type Article = {
+  id: number;
+  title: string;
+  author: string;
+  content: string;
+  views: number;
+  shares: number;
+};
+
+type Props = {
+  articles: Article[];
+  onSummarize: (id: number) => void;
+};
+
+const ArticleList: React.FC<Props> = ({ articles, onSummarize }) => {
   if (!Array.isArray(articles) || articles.length === 0) {
     return <p className="text-gray-600 text-center">No articles available.</p>;
   }

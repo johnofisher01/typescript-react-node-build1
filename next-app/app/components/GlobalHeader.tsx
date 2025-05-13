@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 
-const GlobalHeader = () => {
+type DropdownKeys = 'about' | 'trust' | 'newsroom';
+
+const GlobalHeader: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState({ about: false, trust: false, newsroom: false });
+  const [dropdownOpen, setDropdownOpen] = useState<Record<DropdownKeys, boolean>>({
+    about: false,
+    trust: false,
+    newsroom: false,
+  });
 
-  const toggleDropdown = (menu) => {
+  const toggleDropdown = (menu: DropdownKeys) => {
     setDropdownOpen((prev) => ({ ...prev, [menu]: !prev[menu] }));
   };
 
@@ -21,9 +28,9 @@ const GlobalHeader = () => {
           >
             <style>{`.cls-blue { fill: #3b82f6; }`}</style>
             <g id="Layer_1-2">
-              <polygon className="cls-blue" points="140.7 71.3 71.4 71.3 71.4 140.6 140.7 71.3"></polygon>
-              <polygon className="cls-blue" points="69.3 140.6 69.3 71.3 0 71.3 69.3 140.6"></polygon>
-              <polygon className="cls-blue" points="71.4 0 71.4 69.3 140.7 69.3 71.4 0"></polygon>
+              <polygon className="cls-blue" points="140.7 71.3 71.4 71.3 71.4 140.6 140.7 71.3" />
+              <polygon className="cls-blue" points="69.3 140.6 69.3 71.3 0 71.3 69.3 140.6" />
+              <polygon className="cls-blue" points="71.4 0 71.4 69.3 140.7 69.3 71.4 0" />
             </g>
           </svg>
           <span className="ml-2 text-lg font-bold text-blue-600">Edelman Article Dashboard</span>
@@ -31,49 +38,30 @@ const GlobalHeader = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 items-center">
-          <div className="relative">
-            <button
-              onClick={() => toggleDropdown("about")}
-              className="hover:text-blue-500 text-sm font-medium uppercase"
-            >
-              About <span className="text-xs">{dropdownOpen.about ? "v" : "^"}</span>
-            </button>
-            {dropdownOpen.about && (
-              <div className="absolute left-0 mt-2 w-40 bg-white border border-gray-200 shadow-lg rounded">
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Line 1
-                </a>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Line 2
-                </a>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Line 3
-                </a>
-              </div>
-            )}
-          </div>
-
-          <div className="relative">
-            <button
-              onClick={() => toggleDropdown("trust")}
-              className="hover:text-blue-500 text-sm font-medium uppercase"
-            >
-              Trust <span className="text-xs">{dropdownOpen.trust ? "v" : "^"}</span>
-            </button>
-            {dropdownOpen.trust && (
-              <div className="absolute left-0 mt-2 w-40 bg-white border border-gray-200 shadow-lg rounded">
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Line 1
-                </a>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Line 2
-                </a>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Line 3
-                </a>
-              </div>
-            )}
-          </div>
+          {['about', 'trust', 'newsroom'].map((menu) => (
+            <div key={menu} className="relative">
+              <button
+                onClick={() => toggleDropdown(menu as DropdownKeys)}
+                className="hover:text-blue-500 text-sm font-medium uppercase"
+              >
+                {menu.charAt(0).toUpperCase() + menu.slice(1)}{' '}
+                <span className="text-xs">{dropdownOpen[menu as DropdownKeys] ? 'v' : '^'}</span>
+              </button>
+              {dropdownOpen[menu as DropdownKeys] && (
+                <div className="absolute left-0 mt-2 w-40 bg-white border border-gray-200 shadow-lg rounded">
+                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    Line 1
+                  </a>
+                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    Line 2
+                  </a>
+                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    Line 3
+                  </a>
+                </div>
+              )}
+            </div>
+          ))}
 
           <a href="#" className="hover:text-blue-500 text-sm font-medium uppercase">
             Expertise
@@ -81,29 +69,6 @@ const GlobalHeader = () => {
           <a href="#" className="hover:text-blue-500 text-sm font-medium uppercase">
             Work
           </a>
-
-          <div className="relative">
-            <button
-              onClick={() => toggleDropdown("newsroom")}
-              className="hover:text-blue-500 text-sm font-medium uppercase"
-            >
-              Newsroom <span className="text-xs">{dropdownOpen.newsroom ? "v" : "^"}</span>
-            </button>
-            {dropdownOpen.newsroom && (
-              <div className="absolute left-0 mt-2 w-40 bg-white border border-gray-200 shadow-lg rounded">
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Line 1
-                </a>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Line 2
-                </a>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Line 3
-                </a>
-              </div>
-            )}
-          </div>
-
           <a href="#" className="hover:text-blue-500 text-sm font-medium uppercase">
             Contact
           </a>
@@ -114,6 +79,7 @@ const GlobalHeader = () => {
           >
             2025 Trust Barometer
           </a>
+
           <button className="hover:text-blue-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -132,10 +98,7 @@ const GlobalHeader = () => {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="p-2 rounded-md hover:bg-gray-100"
-          >
+          <button onClick={() => setMenuOpen(!menuOpen)} className="p-2 rounded-md hover:bg-gray-100">
             {menuOpen ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -144,12 +107,7 @@ const GlobalHeader = () => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
               <svg
@@ -159,12 +117,7 @@ const GlobalHeader = () => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             )}
           </button>

@@ -1,37 +1,47 @@
-import React, { useState, useCallback } from "react";
-import debounce from "lodash/debounce";
-import { BsSortAlphaDown, BsSortAlphaUp } from "react-icons/bs";
+'use client';
+import React, { useState, useCallback, ChangeEvent } from 'react';
+import debounce from 'lodash/debounce';
+import { BsSortAlphaDown, BsSortAlphaUp } from 'react-icons/bs';
 
-const FilterSortBar = ({ filters, setFilters }) => {
-  const [authorInput, setAuthorInput] = useState(filters.author || "");
+type Filters = {
+  author: string;
+  sort: string;
+  sortDirection: string;
+};
+
+type Props = {
+  filters: Filters;
+  setFilters: React.Dispatch<React.SetStateAction<Filters>>;
+};
+
+const FilterSortBar: React.FC<Props> = ({ filters, setFilters }) => {
+  const [authorInput, setAuthorInput] = useState(filters.author || '');
 
   const commitAuthor = useCallback(
-    debounce((value) => {
+    debounce((value: string) => {
       setFilters((prev) => ({ ...prev, author: value.trim() }));
     }, 400),
     [setFilters]
   );
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    if (name === "author") {
+    if (name === 'author') {
       setAuthorInput(value);
       commitAuthor(value);
     } else {
-      setFilters({ ...filters, [name]: value });
+      setFilters((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleSortDir = (dir) =>
-    setFilters({ ...filters, sortDirection: dir });
+  const handleSortDir = (dir: string) => {
+    setFilters((prev) => ({ ...prev, sortDirection: dir }));
+  };
 
   return (
     <div className="bg-white shadow-md rounded-lg p-4 flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
       <div className="w-full md:w-1/3">
-        <label
-          htmlFor="author"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
+        <label htmlFor="author" className="block text-sm font-medium text-gray-700 mb-1">
           Filter by Author
         </label>
         <input
@@ -45,10 +55,7 @@ const FilterSortBar = ({ filters, setFilters }) => {
       </div>
 
       <div className="w-full md:w-1/3">
-        <label
-          htmlFor="sort"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
+        <label htmlFor="sort" className="block text-sm font-medium text-gray-700 mb-1">
           Sort By
         </label>
         <select
@@ -69,22 +76,22 @@ const FilterSortBar = ({ filters, setFilters }) => {
       {filters.sort && (
         <div className="w-full md:w-1/3 flex justify-center md:justify-start gap-2">
           <button
-            onClick={() => handleSortDir("asc")}
+            onClick={() => handleSortDir('asc')}
             className={`flex items-center gap-2 px-4 py-2 border rounded-lg ${
-              filters.sortDirection === "asc"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              filters.sortDirection === 'asc'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
             <BsSortAlphaUp />
             Ascending
           </button>
           <button
-            onClick={() => handleSortDir("desc")}
+            onClick={() => handleSortDir('desc')}
             className={`flex items-center gap-2 px-4 py-2 border rounded-lg ${
-              filters.sortDirection === "desc"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              filters.sortDirection === 'desc'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
             <BsSortAlphaDown />

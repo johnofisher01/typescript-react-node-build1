@@ -1,8 +1,18 @@
-import React from "react";
-import { Pagination as MuiPagination } from "@mui/material";
+'use client';
+import React from 'react';
+import { Pagination as MuiPagination, PaginationChangeEvent } from '@mui/material';
 
-const Pagination = ({ total, page, onPageChange, itemsPerPage = 9 }) => {
-  const handleChange = (_, value) => onPageChange(value);
+type Props = {
+  total: number;
+  page: number;
+  onPageChange: (page: number) => void;
+  itemsPerPage?: number;
+};
+
+const Pagination: React.FC<Props> = ({ total, page, onPageChange, itemsPerPage = 9 }) => {
+  const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
+    onPageChange(value);
+  };
 
   return (
     <div className="flex justify-center mt-4">

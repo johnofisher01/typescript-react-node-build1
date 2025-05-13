@@ -1,8 +1,24 @@
-import React from "react";
+'use client';
+import React from 'react';
 
-const Highlights = ({ mostViewed, mostShared }) => {
+type Article = {
+  id: number;
+  title: string;
+  author: string;
+  content?: string;
+  views: number;
+  shares: number;
+};
+
+type Props = {
+  mostViewed: Article | null;
+  mostShared: Article | null;
+};
+
+const Highlights: React.FC<Props> = ({ mostViewed, mostShared }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      {/* Most Viewed Article */}
       <div className="bg-gradient-to-r from-blue-50 to-blue-100 border-l-4 border-blue-500 shadow-lg rounded-lg p-6 flex flex-col justify-between">
         <div>
           <h2 className="text-xl font-bold text-blue-700 flex items-center">
@@ -18,10 +34,10 @@ const Highlights = ({ mostViewed, mostShared }) => {
                 <strong>Author:</strong> {mostViewed.author}
               </p>
               <p className="text-sm text-gray-600 mt-2">
-                {mostViewed.content?.slice(0, 100) || "No content available"}...
+                {mostViewed.content?.slice(0, 100) || 'No content available'}...
               </p>
               <p className="text-sm text-gray-600 mt-2">
-                <strong>Views:</strong> {mostViewed.views} | <strong>Shares:</strong>{" "}
+                <strong>Views:</strong> {mostViewed.views} | <strong>Shares:</strong>{' '}
                 {mostViewed.shares}
               </p>
             </>
@@ -31,6 +47,7 @@ const Highlights = ({ mostViewed, mostShared }) => {
         </div>
       </div>
 
+      {/* Most Shared Article */}
       <div className="bg-gradient-to-r from-green-50 to-green-100 border-l-4 border-green-500 shadow-lg rounded-lg p-6 flex flex-col justify-between">
         <div>
           <h2 className="text-xl font-bold text-green-700 flex items-center">
@@ -46,10 +63,10 @@ const Highlights = ({ mostViewed, mostShared }) => {
                 <strong>Author:</strong> {mostShared.author}
               </p>
               <p className="text-sm text-gray-600 mt-2">
-                {mostShared.content?.slice(0, 100) || "No content available"}...
+                {mostShared.content?.slice(0, 100) || 'No content available'}...
               </p>
               <p className="text-sm text-gray-600 mt-2">
-                <strong>Views:</strong> {mostShared.views} | <strong>Shares:</strong>{" "}
+                <strong>Views:</strong> {mostShared.views} | <strong>Shares:</strong>{' '}
                 {mostShared.shares}
               </p>
             </>
