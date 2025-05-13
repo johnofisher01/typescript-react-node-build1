@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from './react';
-import Highlights from './Highlights';
-import FilterSortBar from './FilterSortBar';
-import ArticleList from './ArticleList';
-import Pagination from './Pagination';
-import SummaryModal from './SummaryModal';
+import React, { useState, useEffect } from 'react';
+import Highlights from '../components/Highlights';
+import FilterSortBar from '../components/FilterSortBar';
+import ArticleList from '../components/ArticleList';
+import Pagination from '../components/Pagination';
+import SummaryModal from '../components/SummaryModal';
 import {
   fetchArticles,
   fetchHighlights,
@@ -37,7 +37,7 @@ type FiltersType = {
 
 const Dashboard: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
-  const [totalRows, setTotalRows] = useState(0);
+  const [totalRows, setTotalRows] = useState<number>(0);
   const [highlights, setHighlights] = useState<HighlightsType>({
     mostViewed: null,
     mostShared: null,
@@ -51,6 +51,7 @@ const Dashboard: React.FC = () => {
   const [summary, setSummary] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
+  // --- Fetch Articles ---
   useEffect(() => {
     fetchArticles({
       page,
@@ -69,6 +70,7 @@ const Dashboard: React.FC = () => {
       });
   }, [page, filters]);
 
+  // --- Fetch Highlights ---
   useEffect(() => {
     fetchHighlights()
       .then((res) =>
@@ -77,7 +79,12 @@ const Dashboard: React.FC = () => {
           mostShared: res.mostShared || null,
         })
       )
-      .catch(() => setHighlights({ mostViewed: null, mostShared: null }));
+      .catch(() =>
+        setHighlights({
+          mostViewed: null,
+          mostShared: null,
+        })
+      );
   }, [filters.author]);
 
   const handleSummarize = async (id: number) => {
@@ -93,6 +100,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="bg-gradient-to-br from-brandLightTeal to-brandTeal text-white min-h-screen flex flex-col items-center">
+      {/* Hero Section */}
       <div
         className="hero bg-cover bg-center w-full"
         style={{
@@ -102,14 +110,12 @@ const Dashboard: React.FC = () => {
       >
         <div className="wrapper max-w-7xl mx-auto px-4">
           <div className="hero-content text-center py-12">
-            <div>
-              <img
-                src="https://edelmancom.cachefly.net/sites/g/files/aatuss191/files/2025-03/ETB%20Title%202a.png"
-                alt="2025 Edelman Trust Barometer"
-                className="mx-auto"
-                loading="lazy"
-              />
-            </div>
+            <img
+              src="https://edelmancom.cachefly.net/sites/g/files/aatuss191/files/2025-03/ETB%20Title%202a.png"
+              alt="2025 Edelman Trust Barometer"
+              className="mx-auto"
+              loading="lazy"
+            />
             <p className="mt-4 text-xl font-bold">
               <strong>Special Report: Trust and Health</strong>
             </p>
@@ -130,15 +136,19 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
+      {/* Main Dashboard Content */}
       <main className="container mx-auto px-4 py-6">
         <Highlights
           mostViewed={highlights.mostViewed}
           mostShared={highlights.mostShared}
         />
+
         <FilterSortBar filters={filters} setFilters={handleSetFilters} />
+
         <div className="bg-white rounded-lg shadow p-6">
           <ArticleList articles={articles} onSummarize={handleSummarize} />
         </div>
+
         {totalRows > ITEMS_PER_PAGE && (
           <Pagination
             total={totalRows}
@@ -147,6 +157,7 @@ const Dashboard: React.FC = () => {
             itemsPerPage={ITEMS_PER_PAGE}
           />
         )}
+
         <SummaryModal
           open={modalOpen}
           onClose={() => setModalOpen(false)}

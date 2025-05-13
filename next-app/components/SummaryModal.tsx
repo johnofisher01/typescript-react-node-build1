@@ -1,6 +1,6 @@
 'use client';
-import React from './react';
-import { Modal, Box, Typography, Button, Fade } from './@mui/material';
+import React from 'react';
+import { Modal, Box, Typography, Button, Fade } from '@mui/material';
 
 type Props = {
   open: boolean;

@@ -1,7 +1,7 @@
 'use client';
-import React, { useState, useCallback, ChangeEvent } from './react';
-import debounce from './lodash/debounce';
-import { BsSortAlphaDown, BsSortAlphaUp } from './react-icons/bs';
+import React, { useState, useCallback, ChangeEvent } from 'react';
+import debounce from 'lodash/debounce';
+import { BsSortAlphaDown, BsSortAlphaUp } from 'react-icons/bs';
 
 type Filters = {
   author: string;

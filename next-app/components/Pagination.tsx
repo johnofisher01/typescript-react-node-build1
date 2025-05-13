@@ -1,6 +1,6 @@
 'use client';
-import React from './react';
-import { Pagination as MuiPagination, PaginationChangeEvent } from './@mui/material';
+import React from 'react';
+import { Pagination as MuiPagination, PaginationChangeEvent } from '@mui/material';
 
 type Props = {
   total: number;
