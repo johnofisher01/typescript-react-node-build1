@@ -15,8 +15,8 @@ export default function HomePage() {
 
   useEffect(() => {
     fetch('/api/articles')
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         setArticles(data?.data || []);
       })
       .catch(() => setArticles([]))
@@ -32,27 +32,35 @@ export default function HomePage() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Articles</h1>
+    <div className="p-8 max-w-3xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-blue-900">Articles</h1>
 
       {loading ? (
-        <p>Loading articles...</p>
+        <p className="text-gray-600">Loading articles...</p>
       ) : (
-        <ul>
+        <ul className="space-y-4">
           {articles.map((article) => (
-            <li key={article.id} style={{ marginBottom: '1rem' }}>
-              <strong>{article.title}</strong> by {article.author}
-              <br />
-              <button onClick={() => summarize(article.id)}>Summarize</button>
+            <li
+              key={article.id}
+              className="p-4 border border-gray-300 rounded-lg shadow-sm"
+            >
+              <p className="text-lg font-semibold">{article.title}</p>
+              <p className="text-sm text-gray-600 mb-2">by {article.author}</p>
+              <button
+                onClick={() => summarize(article.id)}
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              >
+                Summarize
+              </button>
             </li>
           ))}
         </ul>
       )}
 
       {summary && (
-        <div style={{ marginTop: '2rem' }}>
-          <h2>Summary</h2>
-          <p>{summary}</p>
+        <div className="mt-8 p-6 bg-blue-50 border-l-4 border-blue-400 rounded">
+          <h2 className="text-2xl font-bold mb-2 text-blue-800">Summary</h2>
+          <p className="text-gray-800">{summary}</p>
         </div>
       )}
     </div>
