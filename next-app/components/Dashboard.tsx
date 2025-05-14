@@ -38,7 +38,6 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading]         = useState<boolean>(false);
   const [error, setError]             = useState<string>();
 
-  // Fetch Articles (paginated envelope)
   useEffect(() => {
     setLoading(true);
     setError(undefined);
@@ -69,6 +68,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     fetchHighlights()
       .then((res) =>
+      
         setHighlights({
           mostViewed: res.mostViewed || null,
           mostShared: res.mostShared || null,

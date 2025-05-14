@@ -18,7 +18,7 @@ export interface Article {
     data:        T[];
   }
   
-  const BASE = ''; // relative to /api
+  const BASE = ''; 
   
   export async function fetchArticles(opts: {
     page: number;
